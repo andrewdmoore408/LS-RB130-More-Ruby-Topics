@@ -61,6 +61,14 @@ class TodoList
 
   alias_method :<<, :add
 
+  def all_done
+    select { |item| item.done? }
+  end
+
+  def all_not_done
+    select { |item| !(item.done?) }
+  end
+
   def each
     for todo in todos
       yield todo
@@ -93,10 +101,34 @@ class TodoList
     todos.each { |todo| todo.done! }
   end
 
+  def find_by_title(title)
+    each do |item|
+      return item if item.title == title
+    end
+
+    nil
+  end
+
   def item_at(index)
     check_for_valid(index)
 
     todos[index]
+  end
+
+  def mark_all_done
+    each { |item| item.done! }
+  end
+
+  def mark_all_undone
+    each { |item| item.undone! }
+  end
+
+  def mark_done(item_title)
+    each do |item|
+      if item.title == item_title
+        item.done!
+      end
+    end
   end
 
   def mark_done_at(index)
@@ -154,12 +186,6 @@ class TodoList
 end
 
 # TodoList Class 	Description
-# find_by_title 	takes a string as argument, and returns the first Todo object that matches the argument. Return nil if no todo is found.
-# all_done 	returns new TodoList object containing only the done items
-# all_not_done 	returns new TodoList object containing only the not done items
-# mark_done 	takes a string as argument, and marks the first Todo object that matches the argument as done.
-# mark_all_done 	mark every todo as done
-# mark_all_undone 	mark every todo as not done
 
 # The assignment for you is to figure out the rest of the implementation in order for the below code to work. Note that this assignment doesn't have anything to do with blocks yet -- it's just basic Ruby at this point.
 
@@ -177,6 +203,23 @@ list.add(todo3)
 
 todo1.done!
 
-results = list.select { |todo| todo.done? }    # you need to implement this method
+# room = list.find_by_title("Clean room")
+# p room
 
-puts results
+# p list.find_by_title("Clean Room") == nil
+# p list.find_by_title("Vacuum") == nil
+
+# p list.all_done
+# p list.all_not_done
+
+todo1.undone!
+p list
+
+list.mark_done("Buy milk")
+p list
+
+list.mark_all_done
+p list
+
+list.mark_all_undone
+p list
