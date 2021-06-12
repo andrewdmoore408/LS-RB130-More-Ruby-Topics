@@ -66,7 +66,7 @@ class TodoList
       yield todo
     end
 
-    todos
+    self
   end
 
   def size
