@@ -121,6 +121,16 @@ class TodoList
     todos.delete_at(index)
   end
 
+  def select
+    selected = TodoList.new(title)
+
+    each do |item|
+      selected << item if yield(item)
+    end
+
+    selected
+  end
+
   def shift
     todos.shift
   end
@@ -157,6 +167,8 @@ list.add(todo1)
 list.add(todo2)
 list.add(todo3)
 
-list.each do |item|
-  puts item
-end
+todo1.done!
+
+results = list.select { |todo| todo.done? }    # you need to implement this method
+
+puts results
