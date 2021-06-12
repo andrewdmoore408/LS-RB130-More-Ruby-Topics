@@ -94,19 +94,19 @@ class TodoList
   end
 
   def item_at(index)
-    validate(index)
+    check_for_valid(index)
 
     todos[index]
   end
 
   def mark_done_at(index)
-    validate(index)
+    check_for_valid(index)
 
     todos[index].done!
   end
 
   def mark_undone_at(index)
-
+    check_for_valid(index)
 
     todos[index].undone!
   end
@@ -116,7 +116,7 @@ class TodoList
   end
 
   def remove_at(index)
-    validate(index)
+    check_for_valid(index)
 
     todos.delete_at(index)
   end
@@ -148,10 +148,18 @@ class TodoList
     index >= todos.size || index < -todos.size
   end
 
-  def validate(index)
+  def check_for_valid(index)
     raise IndexError.new("Index is out of bounds") if out_of_bounds?(index)
   end
 end
+
+# TodoList Class 	Description
+# find_by_title 	takes a string as argument, and returns the first Todo object that matches the argument. Return nil if no todo is found.
+# all_done 	returns new TodoList object containing only the done items
+# all_not_done 	returns new TodoList object containing only the not done items
+# mark_done 	takes a string as argument, and marks the first Todo object that matches the argument as done.
+# mark_all_done 	mark every todo as done
+# mark_all_undone 	mark every todo as not done
 
 # The assignment for you is to figure out the rest of the implementation in order for the below code to work. Note that this assignment doesn't have anything to do with blocks yet -- it's just basic Ruby at this point.
 
