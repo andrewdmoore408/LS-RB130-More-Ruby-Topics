@@ -158,8 +158,13 @@ class TodoList
   end
 
   def to_s
-    puts "---- #{title} ----"
-    todos.each { |todo| puts todo }
+    str = "---- #{title} ----\n"
+    todos.each do |todo|
+      str << "#{todo}"
+      str << "\n" unless todo == todos.last
+    end
+
+    str
   end
 
   private
@@ -174,3 +179,15 @@ class TodoList
     raise IndexError.new("Index is out of bounds") if out_of_bounds?(index)
   end
 end
+
+todo1 = Todo.new("Buy milk")
+todo2 = Todo.new("Clean room")
+todo3 = Todo.new("Go to gym")
+todos = [todo1, todo2, todo3]
+
+list = TodoList.new("Today's Todos")
+list.add(todo1)
+list.add(todo2)
+list.add(todo3)
+
+puts list.to_s
